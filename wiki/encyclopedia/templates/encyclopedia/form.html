@@ -1,0 +1,25 @@
+{% extends 'encyclopedia/layout.html' %}
+
+{% block title %}Add new page{% endblock %}
+
+{% block body %}
+    <h1>
+        {% if form.is_bound %}{{ form.title.value }}: edit
+        {% else %}Create a new page
+        {% endif%}
+    </h1>
+    <form method="POST" action="
+    {% if form.is_bound %}
+        {% url 'encyclopedia:edit' form.title.value %}
+    {% else %}
+        {% url 'encyclopedia:new' %}
+    {% endif %}">
+        {% csrf_token %}
+        {% if form.is_bound %}
+            {{ form.content }}
+        {% else %}
+            {{ form }}
+        {% endif %}
+        <input type="submit">
+    </form>
+{% endblock %}

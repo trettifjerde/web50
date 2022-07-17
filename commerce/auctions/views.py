@@ -69,7 +69,11 @@ def categories(request):
 def listing(request, listing_id):
     try:
         listing = Listing.objects.get(pk=listing_id)
-        return render(request, "auctions/listing.html", {"listing": listing})
+        comments = listing.comments.all().order_by('created')
+        return render(request, "auctions/listing.html", {
+            "listing": listing,
+            "comments": comments
+            })
     except ObjectDoesNotExist:
         return render(request, "auctions/404.html", {"message": {"text": "No such listing", "class": "error"}})
 

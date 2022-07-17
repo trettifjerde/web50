@@ -1,7 +1,11 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>{{ listing.title }}</h2>
+    <h1>{{ listing.title }}</h1>
+    <div class="listing-date">
+        <span class="b">Created:</span>
+        <span>{% load l10n %}{{ listing.created|localize}}</span>
+    </div>
     <div class="listing">
         <div class="listing-img">
             {% if listing.image %}<img src="{{ listing.image }}">
@@ -14,13 +18,28 @@
                 <div><a href="{% url 'user' listing.user.id %}">{{ listing.user}}</a></div>
             </div>
             <div class="listing-info-item">
-                <h5>Description:</h5>
-                <div>{{ listing.description}}</div>
-            </div>
-            <div class="listing-info-item">
                 <h5>Starting price:</h5>
                 <div>{{ listing.starting_bid }}</div>
             </div>
+            <div class="listing-info-item">
+                <h5>Category:</h5>
+                {% for cat in listing.categories.all %}
+                <span><a href="#">{{cat}}</a></span>
+                {% empty %}<span>not selected</span>
+                {% endfor %}
+            </div>
         </div>
+        <div class="listing-description">
+            <h5>Description:</h5>
+            <div>{{ listing.description}}</div>
+        </div>
+    </div>
+
+    <h3>Comments</h3>
+    <div class="commnets">
+    {% for comment in listing.comments.all %}
+        <div class="comment">{{ comment }}</div>
+    {% empty %}<span>No comments yet</span>
+    {% endfor %}
     </div>
 {% endblock %}

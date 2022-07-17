@@ -32,10 +32,19 @@ main {
 }
 
 .listing {
-    @extend %flex-row;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 'listing-img listing-info'
+                        'listing-description listing-description';
+    margin-bottom: 3rem;
+
+    &-date {
+        font-size: 0.8rem;
+    }
 
     &-img {
-        width: 60%;
+        grid-area: listing-img;
         display: flex;
 
         img, p {
@@ -44,10 +53,15 @@ main {
     }
 
     &-info {
-
+        grid-area: listing-info;
         &-item {
             margin: 0.5rem 0;
         }
     }
+
+    &-description {
+        grid-area: listing-description;
+    }
+
 }
 

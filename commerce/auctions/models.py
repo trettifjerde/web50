@@ -22,7 +22,7 @@ class Category(models.Model):
     listings = models.ManyToManyField(Listing, blank=True, related_name="categories")
 
     def __str__(self):
-        return f"Category: {self.name}"
+        return f"{self.name}"
 
 
 class Bid(models.Model):

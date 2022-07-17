@@ -1,4 +1,4 @@
-.listing, .nav {
+.nav {
   display: flex;
   flex-direction: row;
 }
@@ -35,13 +35,29 @@ main {
   margin: 1.5rem 2rem;
 }
 
+.listing {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  grid-template-rows: auto auto;
+  grid-template-areas: "listing-img listing-info" "listing-description listing-description";
+  margin-bottom: 3rem;
+}
+.listing-date {
+  font-size: 0.8rem;
+}
 .listing-img {
-  width: 60%;
+  grid-area: listing-img;
   display: flex;
 }
 .listing-img img, .listing-img p {
   margin: auto;
 }
+.listing-info {
+  grid-area: listing-info;
+}
 .listing-info-item {
   margin: 0.5rem 0;
+}
+.listing-description {
+  grid-area: listing-description;
 }

@@ -1,6 +1,15 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 body {
     margin: 0;
     background-color: white;
+}
+
+ul {
+    list-style-position: inside;
 }
 
 code {
@@ -13,8 +22,7 @@ h1 {
 }
 
 textarea {
-    height: 90vh;
-    width: 80%;
+    height: 60vh;
 }
 
 .main {
@@ -35,4 +43,14 @@ textarea {
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 60vw;
+}
+
+form button {
+    margin: 1rem 0;
 }

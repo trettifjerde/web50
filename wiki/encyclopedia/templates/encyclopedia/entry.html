@@ -5,12 +5,11 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ title}}</h1>
     <div>
         <a href="{% url 'encyclopedia:edit' title %}">Edit</a>
         <a href="{% url 'encyclopedia:delete' title %}">Delete</a>
     </div>
 
-    {{ entry }}
+    {{ entry|safe }}
 
 {% endblock %}

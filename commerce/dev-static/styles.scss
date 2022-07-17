@@ -7,18 +7,47 @@
 }
 
 body {
-    background-color: bisque;
+    background-color: beige;
     font-family: $font-family;
 }
 
 .nav {
     @extend %flex-row;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
+
+    &-menu {
+        display: flex;
+    }
 
     &-link {
         margin: 0.5rem 1rem;
         text-decoration: none;
+        color: black;
+    }
+}
+
+main {
+    margin: 1.5rem 2rem;
+}
+
+.listing {
+    @extend %flex-row;
+
+    &-img {
+        width: 60%;
+        display: flex;
+
+        img, p {
+            margin: auto;
+        }
+    }
+
+    &-info {
+
+        &-item {
+            margin: 0.5rem 0;
+        }
     }
 }
 

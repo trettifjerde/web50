@@ -1,13 +1,15 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 
-from .models import User
+from .models import User, Listing, Comment, Bid, Category
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = Listing.objects.filter(status=True).order_by('-created')
+    return render(request, "auctions/index.html", {"listings": listings})
 
 
 def login_view(request):
@@ -60,8 +62,33 @@ def register(request):
         return redirect("index")
     else:
         return render(request, "auctions/register.html")
+
+def categories(request):
+    pass
+
+def listing(request, listing_id):
+    try:
+        listing = Listing.objects.get(pk=listing_id)
+        return render(request, "auctions/listing.html", {"listing": listing})
+    except ObjectDoesNotExist:
+        return render(request, "auctions/404.html", {"message": {"text": "No such listing", "class": "error"}})
+
+def userProfile(request, user_id):
+    try:
+        user = User.objects.get(pk=user_id)
+        return render(request, "auctions/user.html", {"user": user})
+    except ObjectDoesNotExist:
+        return render(request, "auctions/404.html", {"message": {"text": "No such user", "class": "error"}})
         
 @login_required
 def profile(request):
     return redirect("index")
+
+@login_required
+def watchlist(request):
+    pass
+
+@login_required
+def new_listing(request):
+    pass
 

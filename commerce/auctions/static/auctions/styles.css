@@ -1,1 +1,47 @@
-.nav{display:flex;flex-direction:row}.b{font-weight:600}*{padding:0;margin:0;box-sizing:content-box}body{background-color:bisque;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}.nav{align-items:center;justify-content:flex-end}.nav-link{margin:.5rem 1rem;text-decoration:none}
+.listing, .nav {
+  display: flex;
+  flex-direction: row;
+}
+
+.b {
+  font-weight: 600;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: content-box;
+}
+
+body {
+  background-color: beige;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nav {
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-menu {
+  display: flex;
+}
+.nav-link {
+  margin: 0.5rem 1rem;
+  text-decoration: none;
+  color: black;
+}
+
+main {
+  margin: 1.5rem 2rem;
+}
+
+.listing-img {
+  width: 60%;
+  display: flex;
+}
+.listing-img img, .listing-img p {
+  margin: auto;
+}
+.listing-info-item {
+  margin: 0.5rem 0;
+}

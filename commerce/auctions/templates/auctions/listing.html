@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{ listing.title }}</h2>
+    <div class="listing">
+        <div class="listing-img">
+            {% if listing.image %}<img src="{{ listing.image }}">
+            {% else %}<p>No image</p>
+            {% endif%}
+        </div>
+        <div class="listing-info">
+            <div class="listing-info-item">
+                <h5>Listed by:</h5>
+                <div><a href="{% url 'user' listing.user.id %}">{{ listing.user}}</a></div>
+            </div>
+            <div class="listing-info-item">
+                <h5>Description:</h5>
+                <div>{{ listing.description}}</div>
+            </div>
+            <div class="listing-info-item">
+                <h5>Starting price:</h5>
+                <div>{{ listing.starting_bid }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

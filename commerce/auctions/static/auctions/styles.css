@@ -1,25 +1,124 @@
-.nav {
+@charset "UTF-8";
+.btn-group-inline, .listing-categories, .listing-header, .listing-preview-info-extra, .nav, .bid-form .field-container.inline, .listing-form .field-container.inline {
   display: flex;
   flex-direction: row;
+  align-items: center;
+}
+
+.bid-form, .comments, .listing {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+button, .btn, .listing-categories a, .bid-form input[type=checkbox], .listing-form input[type=checkbox], .bid-form input:not([type=checkbox]), .listing-form input:not([type=checkbox]), .bid-form textarea, .listing-form textarea, .bid-form select, .listing-form select {
+  transition: all 0.3s ease-out;
+}
+
+.bid-form, .listing-form {
+  display: flex;
+  flex-direction: column;
+}
+.bid-form .field-container, .listing-form .field-container {
+  width: 100%;
+}
+.bid-form .field-container.inline, .listing-form .field-container.inline {
+  gap: 0.5rem;
+}
+.bid-form label, .listing-form label {
+  display: block;
+  font-weight: 600;
+  margin: 0.3rem 0;
+}
+.bid-form input:not([type=checkbox]), .listing-form input:not([type=checkbox]), .bid-form textarea, .listing-form textarea, .bid-form select, .listing-form select {
+  width: 100%;
+  background-color: bisque;
+  border: 1px solid black;
+  outline: none;
+  padding: 0.3rem;
+  overflow: auto;
+}
+.bid-form input:not([type=checkbox]):focus, .listing-form input:not([type=checkbox]):focus, .bid-form textarea:focus, .listing-form textarea:focus, .bid-form select:focus, .listing-form select:focus {
+  border-color: #c46a00;
+}
+.bid-form input[type=checkbox], .listing-form input[type=checkbox] {
+  background-color: bisque;
+  border-color: #ffb55e;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border: 1px solid;
+  border-radius: 3px;
+}
+.bid-form input[type=checkbox]:hover, .listing-form input[type=checkbox]:hover {
+  background-color: #ffb55e;
+}
+.bid-form input[type=checkbox]:checked, .listing-form input[type=checkbox]:checked {
+  background-color: goldenrod;
+}
+.bid-form input[type=checkbox]:checked::after, .listing-form input[type=checkbox]:checked::after {
+  font-weight: 600;
+  font-size: 15px;
+  padding-left: 3px;
+  line-height: 20px;
+  content: "✓";
+}
+
+.listing, .listing-preview {
+  border: 1px solid goldenrod;
+  backdrop-filter: saturate(1.5);
+  box-shadow: 3px 3px 3px #281e06;
+  padding: 1rem;
+  margin: 1rem 0;
 }
 
 .b {
   font-weight: 600;
 }
 
+.sm {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
 * {
   padding: 0;
   margin: 0;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 body {
-  background-color: beige;
+  background-image: url("bg.jpg");
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  width: 80vw;
+  margin: auto;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
+  border: 1px solid black;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .nav {
-  align-items: center;
   justify-content: space-between;
 }
 .nav-menu {
@@ -31,23 +130,66 @@ body {
   color: black;
 }
 
-main {
-  margin: 1.5rem 2rem;
+.listing-preview {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto;
+  gap: 3rem;
+}
+.listing-preview-image {
+  max-height: 20rem;
+}
+.listing-preview-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
+}
+.listing-preview-info-main > * {
+  margin: 0.5rem 0;
+}
+.listing-preview-info-extra {
+  justify-content: space-between;
+  position: relative;
+  bottom: 1rem;
 }
 
 .listing {
   display: grid;
+  gap: 0.3rem;
   grid-template-columns: 1fr 0.5fr;
-  grid-template-rows: auto auto;
-  grid-template-areas: "listing-img listing-info" "listing-description listing-description";
-  margin-bottom: 3rem;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: "listing-header listing-header" "listing-meta listing-info" "listing-img listing-info";
+}
+.listing-header {
+  grid-area: listing-header;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+.listing-meta {
+  grid-area: listing-meta;
 }
 .listing-date {
   font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+.listing-categories {
+  flex-flow: wrap;
+  gap: 0.5rem;
+}
+.listing-categories a {
+  font-size: 0.8rem;
+  border: 1px solid black;
+  color: black;
+  padding: 0.3rem;
+}
+.listing-categories a:hover {
+  opacity: 0.8;
 }
 .listing-img {
   grid-area: listing-img;
   display: flex;
+  max-height: 30rem;
 }
 .listing-img img, .listing-img p {
   margin: auto;
@@ -58,6 +200,69 @@ main {
 .listing-info-item {
   margin: 0.5rem 0;
 }
-.listing-description {
-  grid-area: listing-description;
+
+.listing-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto;
+  gap: 1rem;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+.bid {
+  font-size: 0.7rem;
+  padding: 0.1rem 0;
+}
+.bid:first-of-type {
+  font-weight: 600;
+}
+
+.bid-form {
+  gap: 0.5rem;
+  width: 10rem;
+}
+
+.btn-group-inline {
+  gap: 0.5rem;
+}
+
+button, .btn {
+  display: block;
+  border: 1px solid black;
+  color: black;
+  background-color: goldenrod;
+  padding: 0.5rem;
+  min-width: 3rem;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+}
+button:hover, .btn:hover {
+  background-color: #ae8319;
+}
+
+.btn-red {
+  background-color: #f44141;
+  border-color: #c40b0b;
+}
+.btn-red:hover {
+  background-color: #c40b0b;
+}
+
+.btn-green {
+  background-color: #3aa73a;
+  border-color: #205b20;
+}
+.btn-green:hover {
+  background-color: #205b20;
+}
+
+.btn-blue {
+  background-color: #4a4af9;
+  border-color: #0707d6;
+}
+.btn-blue:hover {
+  background-color: #0707d6;
 }

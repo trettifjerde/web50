@@ -1,11 +1,11 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    <h1>Active Listings</h1>
     
     <div>
         {% for listing in listings %}
-        <a href="{% url 'listing' listing.id %}">{{ listing.title }}</a>
+            {% include "auctions/listing_preview.html" with listing=listing %}
         {% empty %} No open listings yet
         {% endfor %}
     </div>

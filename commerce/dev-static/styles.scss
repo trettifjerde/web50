@@ -3,17 +3,38 @@
 * {
     padding: 0;
     margin: 0;
-    box-sizing: content-box;
+    box-sizing: border-box;
 }
 
 body {
-    background-color: beige;
+    background-image: url("bg.jpg");
     font-family: $font-family;
+    width: 80vw;
+    margin: auto;
+}
+
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+h5 {
+    font-size: 1rem;
+}
+
+img {
+    max-height: 100%;
+    max-width: 100%;
+    border: 1px solid black;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 .nav {
     @extend %flex-row;
-    align-items: center;
     justify-content: space-between;
 
     &-menu {
@@ -27,25 +48,86 @@ body {
     }
 }
 
-main {
-    margin: 1.5rem 2rem;
+.listing-preview {
+    @extend %parchment-fragment;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto;
+    gap: 3rem;
+
+    &-image {
+        max-height: 20rem;
+    }
+
+    &-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 3rem;
+
+        &-main {
+            > * {
+                margin: 0.5rem 0;
+            }
+        }
+
+        &-extra {
+            @extend %flex-row;
+            justify-content: space-between;
+            position: relative;
+            bottom: 1rem;
+        }
+    }
 }
 
 .listing {
+    @extend %listing-block;
+    @extend %parchment-fragment;
     display: grid;
+    gap: 0.3rem;
     grid-template-columns: 1fr 0.5fr;
-    grid-template-rows: auto auto;
-    grid-template-areas: 'listing-img listing-info'
-                        'listing-description listing-description';
-    margin-bottom: 3rem;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:   'listing-header listing-header'
+                            'listing-meta listing-info' 
+                            'listing-img listing-info';
+
+    &-header {
+        grid-area: listing-header;
+        @extend %flex-row;
+        justify-content: space-between;
+        gap: 0.3rem;
+    }
+
+    &-meta {
+        grid-area: listing-meta;
+    }
 
     &-date {
         font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    &-categories {
+        @extend %flex-row;
+        flex-flow: wrap;
+        gap: 0.5rem;
+
+        a {
+            @extend %transition-ease;
+            font-size: 0.8rem;
+            border: 1px solid black;
+            color: black;
+            padding: 0.3rem;
+        }
+        a:hover {
+            opacity: 0.8;
+        }
     }
 
     &-img {
         grid-area: listing-img;
         display: flex;
+        max-height: 30rem;
 
         img, p {
             margin: auto;
@@ -58,10 +140,75 @@ main {
             margin: 0.5rem 0;
         }
     }
+}
 
-    &-description {
-        grid-area: listing-description;
+.listing-form {
+    @extend %form;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    gap: 1rem;
+    margin-left: 10vw;
+    margin-right: 10vw;
+
+}
+
+.comments {
+    @extend %listing-block;
+}
+
+.bid {
+    font-size: 0.7rem;
+    padding: 0.1rem 0;
+
+    &:first-of-type {
+        font-weight: 600;
     }
+}
 
+.bid-form {
+    @extend %listing-block;
+    @extend %form;
+    gap: 0.5rem;
+    width: 10rem;
+}
+
+.price {
+    @extend %price;
+}
+
+.btn-group-inline {
+    @extend %flex-row;
+    gap: 0.5rem;
+}
+
+button, .btn {
+    @extend %transition-ease;
+    display: block;
+    border: 1px solid black;
+    color: black;
+    background-color: goldenrod;
+    padding: 0.5rem;
+    min-width: 3rem;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+        background-color: darken(goldenrod, 10%);
+    }
+}
+
+.btn-red {
+    @include btn-theme($red);
+}
+
+.btn-green {
+    @include btn-theme($green);
+}
+
+.btn-blue {
+    @include btn-theme($blue);
 }
 

@@ -5,7 +5,11 @@
     <div>You will be redirected shortly</div>
     <script>
         setTimeout(() => {
-            window.location.href = "{% url 'index' %}";
+            {% if redirect %}
+                window.location.href = "{{ redirect }}";
+            {% else %}
+                window.location.href = "/";
+            {% endif%}
         }, 5000);
     </script>
 {% endblock %}

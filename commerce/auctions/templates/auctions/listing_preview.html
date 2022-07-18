@@ -1,0 +1,22 @@
+<div class="listing-preview">
+    <div class="listing-preview-image">
+        {% if listing.image %}<img src="{{listing.image}}">{% else %}<span>No image</span>{% endif %}
+    </div>
+    <div class="listing-preview-info">
+        <div class="listing-preview-info-main">
+            <h3><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h3>
+            <div class="sm">Created: {{listing.created}} by <a href="{% url 'user' listing.user.id %}" class="b">{{ listing.user}}</a></div>
+            <div>{{ listing.description}}</div>
+        </div>
+        <div class="listing-preview-info-extra">
+            <div class="listing-categories">
+                {% for cat in listing.category.all %}
+                    <a style="background-color:{{cat.color}};" href="{% url 'categories' %}">{{ cat }}</a>
+                {% endfor %}
+            </div>
+            <div>                    
+                <span class="price">${{ listing.get_current_bid_price}}</span>
+                <span class="sm">({{ listing.get_bids_length}} bids)</span></div>
+        </div>
+    </div>
+</div>

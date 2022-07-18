@@ -1,44 +1,80 @@
 {% extends "auctions/layout.html" %}
 
+{% block title  %} {{ listing.title }} {% endblock %}
+
 {% block body %}
-    <h1>{{ listing.title }}</h1>
-    <div class="listing-date">
-        <span class="b">Created:</span>
-        <span>{% load l10n %}{{ listing.created|localize}}</span>
-    </div>
     <div class="listing">
-        <div class="listing-img">
-            {% if listing.image %}<img src="{{ listing.image }}">
-            {% else %}<p>No image</p>
-            {% endif%}
+        <div class="listing-header">
+            <h1>{{ listing.title }}</h1>
+            {% if user == listing.user %}
+            <div class="btn-group-inline">
+                {% if listing.get_bids_length > 0 %}
+                    <a href="{% url 'close_listing' listing.id %}" class="btn btn-blue">Accept current bid</a>
+                {% endif%}
+                <a href="{% url 'edit_listing' listing.id %}" class="btn btn-green">Edit</a>
+                <a href="{% url 'delete_listing' listing.id %}"class="btn btn-red">Delete</a>
+            </div>
+            {% endif %}
         </div>
-        <div class="listing-info">
-            <div class="listing-info-item">
-                <h5>Listed by:</h5>
-                <div><a href="{% url 'user' listing.user.id %}">{{ listing.user}}</a></div>
+        <div class="listing-meta">
+            <div class="listing-date">
+                <span class="b">Posted:</span>
+                <span>{% load l10n %}{{ listing.created|localize}}</span>
+                <span>by <a class="b" href="{% url 'user' listing.user.id %}">{{ listing.user}}</a></span>
             </div>
-            <div class="listing-info-item">
-                <h5>Starting price:</h5>
-                <div>{{ listing.starting_bid }}</div>
-            </div>
-            <div class="listing-info-item">
-                <h5>Category:</h5>
-                {% for cat in listing.categories.all %}
-                <span><a href="#">{{cat}}</a></span>
-                {% empty %}<span>not selected</span>
+            <div class="listing-categories">
+                {% for cat in listing.category.all %}
+                    <a style="background-color:{{cat.color}};" href="{% url 'categories' %}">{{ cat }}</a>
                 {% endfor %}
             </div>
         </div>
-        <div class="listing-description">
-            <h5>Description:</h5>
-            <div>{{ listing.description}}</div>
+        <div class="listing-img">
+            {% if listing.image %}<img src="{{ listing.image }}">
+            {% else %}<p>No image</p>
+            {% endif %}
+        </div>
+        <div class="listing-info">
+            <div class="listing-info-item">
+                <h5>Current price:</h5>
+                <div class="price">${{ listing.get_current_bid_price }}</div>
+            </div>
+            <div class="listing-info-item">
+                <h5>Description:</h5>
+                <div>{{ listing.description}}</div>
+            </div>
+            <div class="listing-info-item">
+                <h5>Bids: ({{ listing.get_bids_length }})</h5>
+                {% if user == listing.user %}
+                    {% for bid in listing.bids.all %}
+                        <div class="bid">
+                            <span>${{ bid.price }}</span>
+                            <span>by <a href="{% url 'user' bid.user.id %}">{{ bid.user}}</a></span>
+                        </div>
+                    {% empty %}<span>No bids yet</span>
+                    {% endfor %}
+                {% elif user.is_authenticated %}
+                    {% if user == listing.bids.first.user %}
+                        <span>Your bid is the current bid</span>
+                    {% else %}
+                        <form class="bid-form" action="{% url 'bid' listing.id %}"method="POST">
+                            {% csrf_token %}
+                            <input type="number" min="{{ listing.get_current_bid_price }}"name="bid" placeholder="Your price">
+                            <button type="submit">Place bid</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
 
+    <hr>
     <h3>Comments</h3>
     <div class="commnets">
     {% for comment in listing.comments.all %}
-        <div class="comment">{{ comment }}</div>
+        <div class="comment">
+            <h5><a href="{% url 'user' comment.user.id %}">{{ comment.user }}</a></h5>
+            <span>{{ comment.text }}</span>
+        </div>
     {% empty %}<span>No comments yet</span>
     {% endfor %}
     </div>

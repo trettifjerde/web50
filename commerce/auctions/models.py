@@ -4,38 +4,45 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    def on_watchlist(self, listing):
+        return self.watchlist.contains(listing)
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    color = models.CharField(max_length=7, blank=True)
+    slug = models.SlugField(max_length=50)
+    color = models.CharField(max_length=7)
 
     def __str__(self):
         return f"{self.name}"
 
 class Listing(models.Model):
+    class Meta:
+        ordering = ['-created']
+
     title = models.CharField(max_length=64)
     description = models.TextField()
     starting_bid = models.FloatField(default=0)
-    image = models.CharField(max_length=300, blank=True)
     status = models.BooleanField(default=True)
+    image = models.ImageField(upload_to="listings/", null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
     created = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category, blank=True, related_name="listings")
+    watchlist = models.ManyToManyField(User, related_name="watchlist", blank=True)
 
     def __str__(self):
         return f'Listing "{self.title}" ({"open" if self.status else "closed"})'
     
     def get_current_bid_price(self):
-        current = Bid.objects.filter(listing=self).first()
-        return current.price if current else self.starting_bid
+        return self.bids.first().price if self.get_bids_length() else self.starting_bid
 
     def get_current_bid_user(self):
-        current = Bid.objects.filter(listing=self).first()
-        return current.user if current else None
+        return self.bids.first().user
     
     def get_bids_length(self):
-        return len(Bid.objects.filter(listing=self))
+        return len(self.bids.all())
+
+    def get_winner(self):
+        return self.get_current_bid_user() if not self.status else None
 
 
 class Bid(models.Model):

@@ -1,62 +1,32 @@
 @import './mixins';
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-image: url("bg.jpg");
-    font-family: $font-family;
-    width: 80vw;
-    margin: auto;
-}
-
-h1 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-h5 {
-    font-size: 1rem;
-}
-
-img {
-    max-height: 100%;
-    max-width: 100%;
-    border: 1px solid black;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
 .nav {
     @extend %flex-row;
     justify-content: space-between;
 
     &-menu {
-        display: flex;
+        @extend %flex-row;
+        gap: 0.5rem;
     }
 
     &-link {
-        margin: 0.5rem 1rem;
-        text-decoration: none;
+        @extend %parchment;
         color: black;
     }
 }
 
 .listing-preview {
-    @extend %parchment-fragment;
+    @extend %parchment;
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: auto;
     gap: 3rem;
 
     &-image {
+        @extend %flex-row;
+        justify-content: center;
         max-height: 20rem;
+        background-color: $img-bg-color;
     }
 
     &-info {
@@ -81,30 +51,23 @@ a {
 }
 
 .listing {
-    @extend %listing-block;
-    @extend %parchment-fragment;
+    @extend %parchment;
+    padding: 2rem;
     display: grid;
-    gap: 0.3rem;
+    gap: 1rem;
     grid-template-columns: 1fr 0.5fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto 1fr;
     grid-template-areas:   'listing-header listing-header'
-                            'listing-meta listing-info' 
                             'listing-img listing-info';
 
     &-header {
         grid-area: listing-header;
-        @extend %flex-row;
-        justify-content: space-between;
-        gap: 0.3rem;
+        @extend %flex-row-sb;
+        flex-flow: wrap;
     }
 
     &-meta {
-        grid-area: listing-meta;
-    }
-
-    &-date {
-        font-size: 0.8rem;
-        margin-bottom: 0.5rem;
+        width: 100%;
     }
 
     &-categories {
@@ -127,11 +90,9 @@ a {
     &-img {
         grid-area: listing-img;
         display: flex;
+        justify-content: center;
         max-height: 30rem;
-
-        img, p {
-            margin: auto;
-        }
+        background-color: $img-bg-color;
     }
 
     &-info {
@@ -153,8 +114,22 @@ a {
 
 }
 
-.comments {
-    @extend %listing-block;
+.group {
+    @extend %group-block;
+}
+
+.comment {
+    @extend %parchment;
+
+    >:first-child {
+        @extend %flex-row-sb;
+    }
+
+    &-form {
+        @extend %form;
+        max-width: 500px;
+        margin: auto;
+    }
 }
 
 .bid {
@@ -167,7 +142,6 @@ a {
 }
 
 .bid-form {
-    @extend %listing-block;
     @extend %form;
     gap: 0.5rem;
     width: 10rem;
@@ -177,38 +151,20 @@ a {
     @extend %price;
 }
 
-.btn-group-inline {
-    @extend %flex-row;
-    gap: 0.5rem;
-}
+.date {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
 
-button, .btn {
-    @extend %transition-ease;
-    display: block;
-    border: 1px solid black;
-    color: black;
-    background-color: goldenrod;
-    padding: 0.5rem;
-    min-width: 3rem;
-    text-align: center;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: 600;
-
-    &:hover {
-        background-color: darken(goldenrod, 10%);
+    :first-child {
+        font-weight: 600
     }
 }
 
-.btn-red {
-    @include btn-theme($red);
-}
+.btn-group-inline {
+    @extend %flex-row;
+    gap: 0.5rem;
 
-.btn-green {
-    @include btn-theme($green);
-}
-
-.btn-blue {
-    @include btn-theme($blue);
-}
-
+    > * {
+        width: 100%;
+    }
+} 

@@ -3,7 +3,9 @@
 {% block title %}Categories{% endblock %}
 
 {% block body %}
+    <div class="listing-categories">
     {% for cat in categories %}
-    <div>{{cat}}</div>
+        {% include 'auctions/category.html' with cat=cat%}
     {% endfor %}
+    </div>
 {% endblock %}

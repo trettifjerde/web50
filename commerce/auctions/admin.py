@@ -14,8 +14,9 @@ class CommentInline(admin.TabularInline):
     model = Comment
     extra = 0
 
-class CategoryInline(admin.TabularInline):
+class CategoryInline(admin.ModelAdmin):
     model = Category
+    prepopulated_fields = {'slug': ('name',)}
     extra = 0
 
 class UserAdmin(admin.ModelAdmin):
@@ -29,6 +30,6 @@ class ListingAdmin(admin.ModelAdmin):
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Bid)
 admin.site.register(Comment)
-admin.site.register(Category)
+admin.site.register(Category, CategoryInline)
 admin.site.register(User, UserAdmin)
 

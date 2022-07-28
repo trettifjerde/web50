@@ -1,15 +1,12 @@
 {% extends "auctions/layout.html" %}
 
+{% block title %}{{ title }}{% endblock %}
 {% block body %}
-    <h1>Active Listings</h1>
-    
-    <div>
+    <h1>{{ title }}</h1>   
+    <div class="group">
         {% for listing in listings %}
             {% include "auctions/listing_preview.html" with listing=listing %}
-        {% empty %} No open listings yet
+        {% empty %} No listings yet
         {% endfor %}
     </div>
-    {% if message %}
-        <div class="msg {{ message.class }}">{{ message.text }}</div>
-    {% endif %}
 {% endblock %}

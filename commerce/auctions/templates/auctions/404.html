@@ -5,7 +5,7 @@
     <div>You will be redirected shortly</div>
     <script>
         setTimeout(() => {
-            {% if redirect %}
+            {% if message.redirect %}
                 window.location.href = "{{ redirect }}";
             {% else %}
                 window.location.href = "/";

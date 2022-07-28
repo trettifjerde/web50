@@ -1,13 +1,12 @@
 {% extends "auctions/layout.html" %}
 
+{% block title %}Auctions: user {{member.username}}{% endblock %}
 {% block body %}
-    <h2>{{ user.username }}'s active listings</h2>
+    <h1>{{ member.username }}'s listings</h1>
 
-    <div class="listing-previews">
-    {% for listing in user.listings.all %}
-        {% if listing.status %}
-            {% include "auctions/listing_preview.html" with listing=listing %}
-        {% endif %}
+    <div class="group">
+    {% for listing in member.listings.all %}
+        {% include "auctions/listing_preview.html" with listing=listing %}
     {% empty %}<span>No listings yet</span>
     {% endfor %}
     </div>

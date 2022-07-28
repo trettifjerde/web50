@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<form class="listing-form" 
+<form enctype="multipart/form-data" class="listing-form" 
     {% if action == 'new' %}action="{% url 'new_listing' %}"
     {% else %}action="{% url 'edit_listing' form.instance.id %}"
     {% endif %}
@@ -20,8 +20,18 @@
             {{ form.description }} 
         </div>
         <div class="field-container">
-            <label for="{{form.image.id_for_label}}">Link to image</label>
-            {{ form.image }}
+            <label for="{{form.image.id_for_label}}">Upload image</label>
+            <div>
+                {{ form.image }}
+            </div>
+        </div>
+        <div class="btn-group-inline group">
+            <button type="submit">Save</button>
+            <a class="btn" href="
+            {% if form.instance.id %}{% url 'listing' form.instance.id %}
+            {% else %}{% url 'index' %}
+            {% endif %}
+            ">Cancel</a>
         </div>
     </div>
     <div>
@@ -39,7 +49,11 @@
             <label for="{{form.status.id_for_label}}">Open</label>
             {{ form.status}}
         </div>
+        <div>
+            {% for error in errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
     </div>
-    <button type="submit">Save</button>
 </form>
 {% endblock %}
